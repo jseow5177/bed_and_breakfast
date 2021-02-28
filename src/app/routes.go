@@ -20,6 +20,16 @@ func routes() http.Handler {
 
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/about", handlers.Repo.About)
+	mux.Get("/generals-quarter", handlers.Repo.Generals)
+	mux.Get("/majors-suite", handlers.Repo.Majors)
+	mux.Get("/search-availability", handlers.Repo.Availability)
+
+	// Initiates FileServer Handler
+	// http.Dir() creates a FileSystem that points to the application static files
+	fileServer := http.FileServer(http.Dir("./static/"))
+
+	// http.StripPrefix removes "/static/" from the request URL
+	mux.Handle("/static/*", http.StripPrefix("/static/", fileServer))
 
 	return mux
 }

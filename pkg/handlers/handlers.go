@@ -30,21 +30,30 @@ func RegisterRepo(r *Repository) {
 
 // Home handles request to root route
 func (*Repository)Home(w http.ResponseWriter, r *http.Request) {
-	remoteIP := r.RemoteAddr // Get IP Address of request
-	Repo.App.Session.Put(r.Context(), "remote_ip", remoteIP) // Store IP Address into session
-
 	render.Template(w, "home.page.html", &models.TemplateData{})
 }
 
 // About handles request to About page
 func (*Repository)About(w http.ResponseWriter, r *http.Request) {
-	stringMap := make(map[string]string)
-	stringMap["greet"] = "Hello World"
+	render.Template(w, "about.page.html", &models.TemplateData{})
+}
 
-	remoteIP := Repo.App.Session.GetString(r.Context(), "remote_ip")
-	stringMap["remote_ip"] = remoteIP
+// Generals handles request to the General's Quarter room page
+func (*Repository)Generals(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, "generals.page.html", &models.TemplateData{})
+}
 
-	render.Template(w, "about.page.html", &models.TemplateData{
-		StringMap: stringMap,
-	})
+// Majors handles request to the Major's Suite room page
+func (*Repository)Majors(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, "majors.page.html", &models.TemplateData{})
+}
+
+// Availability handles request to the page to search for room availability
+func (*Repository)Availability(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, "search-availability.page.html", &models.TemplateData{})
+}
+
+// Contact handles request to the contact page
+func (*Repository)Contact(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, "contact.page.html", &models.TemplateData{})
 }
