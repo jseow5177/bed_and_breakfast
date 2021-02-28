@@ -1,0 +1,33 @@
+{{template "base" .}}
+
+{{define "content"}}
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <img src="/static/images/marjors-suite.png" class="img-fluid img-thumbnail mx-auto d-block room-image" />
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col">
+      <h1 class="text-center mt-4">Major's Suite</h1>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac congue magna. Sed molestie id ligula tristique fermentum.
+        Aliquam porttitor a sapien sit amet congue. Etiam tincidunt odio ut dui pretium, eu ullamcorper metus cursus. Donec tempus, odio id maximus ultricies, eros lacus ultricies neque,
+        eu ullamcorper nibh ante nec metus. Maecenas in neque vitae ipsum mollis sollicitudin ut posuere mauris. Aliquam a mattis felis, ut posuere nulla.
+        Duis pretium lectus ut est sodales, mollis feugiat sapien volutpat. Quisque ut sapien a nisi vehicula auctor. Etiam a nisi orci. Duis dapibus lacus lectus, vel aliquam dui sagittis in..
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col text-center">
+      <a id="check-availability" href="#" class="btn btn-success">Check Availability</a>
+    </div>
+  </div>
+</div>
+{{end}}
+
+{{define "js"}}
+<script type="module" src="/static/js/scripts/check-availability.js"></script>
+{{end}}
