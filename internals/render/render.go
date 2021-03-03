@@ -7,8 +7,9 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/jseow5177/bed_and_breakfast/pkg/config"
-	"github.com/jseow5177/bed_and_breakfast/pkg/models"
+	"github.com/jseow5177/bed_and_breakfast/internals/config"
+	"github.com/jseow5177/bed_and_breakfast/internals/models"
+	"github.com/justinas/nosurf"
 )
 
 var functions = template.FuncMap{}
@@ -21,8 +22,15 @@ func RegisterAppConfig(a *config.AppConfig) {
 	app = a
 }
 
+// CreateDefaultData adds default data that is needed in templates
+// For example, the CSRF token
+func CreateDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData{
+	td.CSRFToken = nosurf.Token(r)
+	return td
+}
+
 // Template renders a html template.
-func Template(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
+func Template(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) {
 
 	var tc map[string]*template.Template
 
@@ -33,6 +41,8 @@ func Template(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
 	}
 
 	t, ok := tc[tmpl] // Get the template of requested page
+
+	td = CreateDefaultData(td, r)
 
 	if !ok {
 		// TODO: Better error handling
