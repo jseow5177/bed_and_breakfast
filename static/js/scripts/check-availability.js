@@ -1,12 +1,9 @@
-import { initialiseDateRangePicker } from '../helper/date-range-picker.js'
-import { validateFormBeforeSubmit } from '../helper/validate-form.js'
-
 const DATE_RANGE_INPUTS_ID = 'reservation-dates'
 const FORM_ID = 'validate-form'
 
 // HTML for date range inputs form
 const html = `
-  <form id=${FORM_ID} action="" method="GET" novalidate>
+  <form id=${FORM_ID} novalidate>
     <div id=${DATE_RANGE_INPUTS_ID} class="row">
       <div class="col">
         <div class="form-group">
@@ -16,11 +13,11 @@ const html = `
             class="form-control"
             name="start_date"
             autocomplete="off"
-            placeholder="Starting date"
+            placeholder="Start date"
             required
           >
           <div class="invalid-feedback">
-            Starting date is required.
+            Start date is required.
           </div>
         </div>
       </div>
@@ -28,15 +25,15 @@ const html = `
         <div class="form-group">
           <input
             type="text"
-            id="ending_date"
+            id="end_date"
             class="form-control"
-            name="ending_date"
+            name="end_date"
             autocomplete="off"
-            placeholder="Ending date"
+            placeholder="End date"
             required
           >
           <div class="invalid-feedback">
-            Ending date is required.
+            End date is required.
           </div>
         </div>
       </div>
@@ -45,17 +42,28 @@ const html = `
 `
 
 const checkAvailabilityBtn = document.getElementById('check-availability')
-
-checkAvailabilityBtn.addEventListener('click', openFormModal)
-
-function openFormModal() {
-  Swal.fire({
+checkAvailabilityBtn.addEventListener('click', function () {
+  FormModal.openFormModal({
     title: 'Pick a date range',
-    didOpen: () => {
-      initialiseDateRangePicker(DATE_RANGE_INPUTS_ID) // Initialise date picker after modal is opened
-      validateFormBeforeSubmit(FORM_ID) // Listen to submit event to validate form before submission
-    },
-    confirmButtonText: 'Done',
     html,
+    onOpen: () => {
+      DatePicker.initialiseDateRangePicker(DATE_RANGE_INPUTS_ID) // Initialise date picker after modal is opened
+      FormValidation.validateFormBeforeSubmit(FORM_ID) // Listen to submit event to validate form before submission
+    },
+    onSubmit: () => {
+      const form = document.getElementById(FORM_ID)
+      const formData = new FormData(form)
+      formData.append('csrf_token', CSRFToken)
+
+      fetch('/json-test', {
+        method: 'POST',
+        body: formData
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+        })
+    },
+    confirmButtonText: 'Submit'
   })
-}
+})
