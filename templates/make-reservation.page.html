@@ -1,5 +1,89 @@
 {{template "base" .}}
 
 {{define "content"}}
-<h1>Reservation page</h1>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Make Reservation</h1>
+      <h6>Reservation details</h6>
+      <form id="make-reservation-form" method="POST" action="/make-reservation" novalidate>
+
+        {{ $formValues := .Form.Values }}
+
+        <!-- CSRF Token as hidden field -->
+        <input type="hidden" name="csrf_token" value={{.CSRFToken}}>
+
+        <div class="form-group">
+          <label for="first_name">First Name:</label>
+          <input
+            type="text"
+            name="first_name"
+            id="first_name"
+            class="form-control {{with .Form.Errors.Get "first_name"}} is-invalid {{end}}"
+            required
+            autocomplete="off"
+            value="{{$formValues.Get "first_name"}}"
+          >
+          {{with .Form.Errors.Get "first_name"}}
+            <label class="text-danger">{{.}}</label>
+          {{end}}
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="last_name">Last Name:</label>
+          <input
+            type="text"
+            name="last_name"
+            id="last_name"
+            class="form-control {{with .Form.Errors.Get "last_name"}} is-invalid {{end}}"
+            required
+            autocomplete="off"
+            value="{{$formValues.Get "last_name"}}"
+          >
+          {{with .Form.Errors.Get "last_name"}}
+            <label class="text-danger">{{.}}</label>
+          {{end}}
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="email">Email:</label>
+          <input
+            type="text"
+            name="email"
+            id="email"
+            class="form-control {{with .Form.Errors.Get "email"}} is-invalid {{end}}"
+            required
+            autocomplete="off"
+            value="{{$formValues.Get "email"}}"
+          >
+          {{with .Form.Errors.Get "email"}}
+            <label class="text-danger">{{.}}</label>
+          {{end}}
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="phone">Phone Number:</label>
+          <input
+            type="text"
+            name="phone"
+            id="phone"
+            class="form-control {{with .Form.Errors.Get "phone"}} is-invalid {{end}}"
+            required
+            autocomplete="off"
+            value="{{$formValues.Get "phone"}}"
+          >
+          {{with .Form.Errors.Get "phone"}}
+            <label class="text-danger">{{.}}</label>
+          {{end}}
+        </div>
+
+        <input type="submit" class="btn btn-primary mt-3" value="Make Reservation">
+      </form>
+    </div>
+  </div>
+</div>
+{{end}}
+
+{{define "js"}}
+<!-- <script src="/static/js/scripts/make-reservation.js"></script> -->
 {{end}}
