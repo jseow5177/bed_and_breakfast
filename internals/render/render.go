@@ -25,6 +25,9 @@ func RegisterAppConfig(a *config.AppConfig) {
 // CreateDefaultData adds default data that is needed in templates
 // For example, the CSRF token
 func CreateDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData{
+	td.Error = app.Session.PopString(r.Context(), "error") // Extract error message from session
+	td.Flash = app.Session.PopString(r.Context(), "flash") // Extract flash (success) message from session
+	td.Warning = app.Session.PopString(r.Context(), "warning") // Extract warning message from session
 	td.CSRFToken = nosurf.Token(r)
 	return td
 }
