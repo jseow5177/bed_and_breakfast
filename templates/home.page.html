@@ -56,3 +56,11 @@
   </div>
 </div>
 {{end}}
+
+{{define "js"}}
+<script>
+  // Assign error message to a variable so that it is accessible in the script
+  const errorMsg = "{{.Error}}"
+</script>
+<script src="/static/js/scripts/home.js"></script>
+{{end}}

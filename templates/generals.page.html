@@ -29,5 +29,9 @@
 {{end}}
 
 {{define "js"}}
-<script type="module" src="/static/js/scripts/check-availability.js"></script>
+<script>
+  // Assign CSRFToken to a variable so that it is accessible to the script below
+  const CSRFToken = "{{.CSRFToken}}"
+</script>
+<script src="/static/js/scripts/check-availability.js"></script>
 {{end}}
