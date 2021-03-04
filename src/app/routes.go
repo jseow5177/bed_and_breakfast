@@ -5,7 +5,7 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/jseow5177/bed_and_breakfast/pkg/handlers"
+	"github.com/jseow5177/bed_and_breakfast/internals/handlers"
 )
 
 
@@ -21,8 +21,14 @@ func routes() http.Handler {
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/about", handlers.Repo.About)
 	mux.Get("/generals-quarter", handlers.Repo.Generals)
-	mux.Get("/majors-suite", handlers.Repo.Majors)
+
+	mux.Get("/make-reservation", handlers.Repo.Reservation)
+	mux.Post("/make-reservation", handlers.Repo.PostReservation)
+	mux.Get("/reservation-summary", handlers.Repo.ReservationSummary)
+
 	mux.Get("/search-availability", handlers.Repo.Availability)
+	mux.Post("/search-availability", handlers.Repo.PostAvailability)
+	mux.Post("/json-test", handlers.Repo.AvailabilityJSON)
 
 	// Initiates FileServer Handler
 	// http.Dir() creates a FileSystem that points to the application static files
