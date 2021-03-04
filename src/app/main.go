@@ -1,15 +1,17 @@
 package main
 
 import (
+	"encoding/gob"
 	"fmt"
 	"log"
 	"net/http"
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/jseow5177/bed_and_breakfast/pkg/config"
-	"github.com/jseow5177/bed_and_breakfast/pkg/handlers"
-	"github.com/jseow5177/bed_and_breakfast/pkg/render"
+	"github.com/jseow5177/bed_and_breakfast/internals/config"
+	"github.com/jseow5177/bed_and_breakfast/internals/handlers"
+	"github.com/jseow5177/bed_and_breakfast/internals/models"
+	"github.com/jseow5177/bed_and_breakfast/internals/render"
 )
 
 // Declare an AppConfig
@@ -18,6 +20,8 @@ var app config.AppConfig
 const portNumber = ":8080"
 
 func main() {
+
+	gob.Register(models.Reservation{})
 
 	app.InProduction = false // Change to true when in production
 
