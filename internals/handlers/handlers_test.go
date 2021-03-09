@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"net/http"
-	"net/http/httptest"
 	"net/url"
 	"testing"
 )
@@ -41,19 +40,16 @@ var tests = []routeTest{
 }
 
 func TestHandlers(t *testing.T) {
-	routes := getRoutes();
-
-	ts := httptest.NewServer(routes);
-	defer ts.Close();
+	defer ts.Close()
 
 	var resp *http.Response
-	var err error;
+	var err error
 
 	for _, test := range tests {
 		if test.method == "GET" {
 			resp, err = ts.Client().Get(ts.URL + test.url)
 		} else if test.method == "POST" {
-			values := url.Values{};
+			values := url.Values{}
 			for _, data := range test.params {
 				values.Add(data.key, data.value)
 			}
@@ -61,12 +57,11 @@ func TestHandlers(t *testing.T) {
 		}
 
 		if err != nil {
-			t.Log(err);
-			t.Fatal(err);
+			t.Fatal(err)
 		}
 
 		if resp.StatusCode != test.expectedStatusCode {
-			t.Errorf("Expected %d, but got %d", test.expectedStatusCode, resp.StatusCode);
+			t.Errorf("Expected %d, but got %d", test.expectedStatusCode, resp.StatusCode)
 		}
 	}
 }
