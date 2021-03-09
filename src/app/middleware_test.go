@@ -7,8 +7,8 @@ import (
 
 
 func TestNoSurf(t *testing.T) {
-	var mh mockHandler;
-	resp := NoSurf(mh);
+	var mh mockHandler
+	resp := NoSurf(mh)
 
 	switch resp.(type) {
 		case http.Handler:
@@ -18,8 +18,8 @@ func TestNoSurf(t *testing.T) {
 }
 
 func TestSessionLoad(t *testing.T) {
-	var mh mockHandler;
-	resp := SessionLoad(mh);
+	var mh mockHandler
+	resp := SessionLoad(mh)
 
 	switch resp.(type) {
 		case http.Handler:

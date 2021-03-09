@@ -8,11 +8,11 @@ import (
 
 
 func TestRoutes(t *testing.T) {
-	mux := routes();
+	mux := routes()
 
 	switch mux.(type) {
 		case *chi.Mux:
 		default:
-			t.Error("Type returned by routes() is not *chi.Mux");
+			t.Error("Type returned by routes() is not *chi.Mux")
 	}
 }

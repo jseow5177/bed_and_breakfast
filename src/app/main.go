@@ -20,9 +20,9 @@ var app config.AppConfig
 const portNumber = ":8080"
 
 func main() {
-	err := run();
+	err := run()
 	if err != nil {
-		log.Fatal(err);
+		log.Fatal(err)
 	}
 	
 	// Create a custom server
