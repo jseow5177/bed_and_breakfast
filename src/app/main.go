@@ -20,7 +20,26 @@ var app config.AppConfig
 const portNumber = ":8080"
 
 func main() {
+	err := run();
+	if err != nil {
+		log.Fatal(err);
+	}
+	
+	// Create a custom server
+	srv := &http.Server{
+		Addr: portNumber, // Port number
+		Handler: routes(), // Register multiplexer
+	}
 
+	fmt.Println("App is listening at port", portNumber)
+	
+	// ListenAndServe always return a non-nil error
+	// In other words, it will only return when it fails
+	err = srv.ListenAndServe()
+	log.Fatal(err)
+}
+
+func run() error {
 	gob.Register(models.Reservation{})
 
 	app.InProduction = false // Change to true when in production
@@ -37,6 +56,7 @@ func main() {
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
 		log.Fatal("Cannot create template cache")
+		return err
 	}
 
 	app.TemplateCache = tc // Store the template cache
@@ -50,15 +70,5 @@ func main() {
 	// Gives the handlers package access to the newly created repo, which holds the AppConfig instance
 	handlers.RegisterRepo(repo)
 
-	// Create a custom server
-	srv := &http.Server{
-		Addr: portNumber, // Port number
-		Handler: routes(), // Register multiplexer
-	}
-
-	fmt.Println("App is listening at port", portNumber)
-	// ListenAndServe always return a non-nil error
-	// In other words, it will only return when it fails
-	err = srv.ListenAndServe()
-	log.Fatal(err)
+	return nil
 }
